@@ -1,3 +1,5 @@
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-pipeagent.vercel.app-6366F1?style=flat-square)](https://pipeagent.vercel.app)
+
 # PipeAgent — Agentic CRM
 
 PipeAgent est un CRM agentique conçu pour la recherche de stage en sales tech. Il combine une pipeline Kanban avec des features IA (Claude) pour gérer les contacts, préparer les appels, rédiger des emails personnalisés et prioriser les prospects par scoring.
