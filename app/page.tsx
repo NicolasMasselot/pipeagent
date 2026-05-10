@@ -11,6 +11,7 @@ import Hero from "@/components/layout/Hero";
 import WelcomeDialog from "@/components/layout/WelcomeDialog";
 import PipelineBoard from "@/components/pipeline/PipelineBoard";
 import ContactDetailSheet from "@/components/contact/ContactDetailSheet";
+import AddContactDialog from "@/components/contact/AddContactDialog";
 import DemoTour from "@/components/demo/DemoTour";
 import { Button } from "@/components/ui/button";
 
@@ -21,6 +22,7 @@ export default function HomePage() {
   const [tourOpen, setTourOpen] = useState(false);
   const [forcedTab, setForcedTab] = useState<string | undefined>(undefined);
   const [bulkProgress, setBulkProgress] = useState<{ done: number; total: number } | null>(null);
+  const [addContactOpen, setAddContactOpen] = useState(false);
 
   useEffect(() => {
     setContacts(loadContacts());
@@ -39,6 +41,24 @@ export default function HomePage() {
     });
     /* Keep selectedContact in sync so the open sheet reflects bulk score updates */
     setSelectedContact((prev) => (prev?.id === updated.id ? updated : prev));
+  }
+
+  function handleAddContact(contact: Contact) {
+    const updated = [...contacts, contact];
+    setContacts(updated);
+    saveContacts(updated);
+
+    toast("Contact ajouté · scoring en cours…");
+
+    /* Fire-and-forget: score in background, update when done */
+    scoreContact(contact, USER_PROFILE)
+      .then((result) => {
+        handleContactUpdate(applyScoreResult(contact, result));
+        toast.success(`Score calculé pour ${contact.firstName} ${contact.lastName}`);
+      })
+      .catch(() => {
+        /* Silent failure — contact is still added, just unscored */
+      });
   }
 
   async function handleBulkScore() {
@@ -73,7 +93,7 @@ export default function HomePage() {
   return (
     <>
       <WelcomeDialog onStartTour={() => setTourOpen(true)} />
-      <Topbar />
+      <Topbar onAddContact={() => setAddContactOpen(true)} />
       <Hero onStartTour={() => setTourOpen(true)} />
 
       <div className="flex items-center justify-end gap-3 px-6 pb-2">
@@ -124,6 +144,12 @@ export default function HomePage() {
         onOpenChange={setSheetOpen}
         onUpdate={handleContactUpdate}
         forcedTab={forcedTab}
+      />
+
+      <AddContactDialog
+        open={addContactOpen}
+        onOpenChange={setAddContactOpen}
+        onAdd={handleAddContact}
       />
 
       <DemoTour
