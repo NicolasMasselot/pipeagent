@@ -9,7 +9,7 @@ interface HeroProps {
 
 export default function Hero({ onStartTour }: HeroProps) {
   return (
-    <section className="px-6 py-8 shrink-0">
+    <section className="py-8 max-w-3xl">
 
       {/* Eyebrow */}
       <div className="inline-flex items-center px-3 py-1 rounded-full bg-pipe-accent/10 border border-pipe-accent/20 text-pipe-accent text-xs font-mono uppercase tracking-wider">
@@ -22,7 +22,7 @@ export default function Hero({ onStartTour }: HeroProps) {
       </h1>
 
       {/* Sous-titre */}
-      <p className="mt-3 text-base text-muted-foreground max-w-xl leading-relaxed">
+      <p className="mt-3 text-base text-muted-foreground leading-relaxed">
         PipeAgent transforme une pipeline brute en workflow agentique. Pre-call research,
         emails contextuels et lead scoring, propulsés par Claude. Construit par Nicolas
         Masselot, M1 ESCP, en candidature stage juin 2026.
@@ -56,7 +56,7 @@ export default function Hero({ onStartTour }: HeroProps) {
       {/* Stats */}
       <div className="mt-5 flex gap-6 text-xs text-muted-foreground">
         <span>8 contacts · pipeline de démo</span>
-        <span>3 features IA · Claude Sonnet 4.5</span>
+        <span>3 features IA · Claude Sonnet 4.6</span>
         <span>100% local storage · pas de DB</span>
       </div>
 

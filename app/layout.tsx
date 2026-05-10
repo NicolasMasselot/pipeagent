@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
-import Sidebar from "@/components/layout/Sidebar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,8 +19,23 @@ export const metadata: Metadata = {
   description: "CRM agentique pour candidatures sales tech. Pipeline visuelle, recherche pre-call IA, génération d'emails et lead scoring.",
   openGraph: {
     title: "PipeAgent — Agentic CRM",
-    description: "CRM agentique pour candidatures sales tech.",
+    description: "CRM agentique pour candidatures sales tech. Pipeline, pre-call research, emails et lead scoring propulsés par Claude.",
     type: "website",
+    url: "https://pipeagent.vercel.app",
+    images: [
+      {
+        url: "https://pipeagent.vercel.app/screenshot.png",
+        width: 1280,
+        height: 800,
+        alt: "PipeAgent — Agentic CRM",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PipeAgent — Agentic CRM",
+    description: "CRM agentique pour candidatures sales tech.",
+    images: ["https://pipeagent.vercel.app/screenshot.png"],
   },
 };
 
@@ -33,16 +47,11 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
     >
-      <body className="h-full">
+      <body className="min-h-screen bg-background text-foreground">
         <TooltipProvider>
-          <div className="flex h-screen overflow-hidden">
-            <Sidebar />
-            <main className="flex-1 flex flex-col overflow-y-auto">
-              {children}
-            </main>
-          </div>
+          {children}
         </TooltipProvider>
         <Toaster />
       </body>

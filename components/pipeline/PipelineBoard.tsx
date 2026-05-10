@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import {
   DndContext,
   PointerSensor,
@@ -10,7 +10,7 @@ import {
 } from "@dnd-kit/core";
 import type { Contact, Stage } from "@/lib/types/contact";
 import { STAGES } from "@/lib/types/contact";
-import { saveContacts } from "@/lib/storage/contacts-store";
+import { getPriorityContact } from "@/lib/utils/priority";
 import KanbanColumn from "./KanbanColumn";
 
 interface PipelineBoardProps {
@@ -24,24 +24,22 @@ export default function PipelineBoard({
   contacts,
   onContactsChange,
 }: PipelineBoardProps) {
-  /* 5px threshold prevents drag from firing on simple clicks */
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 5 },
     })
   );
 
-  /* Suppresses the synthetic onClick emitted right after a drag ends */
-  const [isDragging, setIsDragging] = useState(false);
+  const isDraggingRef = useRef(false);
 
   function handleDragStart() {
-    setIsDragging(true);
+    isDraggingRef.current = true;
   }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
-
-    setTimeout(() => setIsDragging(false), 50);
+    /* Delay reset so the synthetic onClick fired after pointerup still sees true. */
+    setTimeout(() => { isDraggingRef.current = false; }, 50);
 
     if (!over) return;
 
@@ -55,34 +53,42 @@ export default function PipelineBoard({
       c.id === contactId ? { ...c, stage: targetStage } : c
     );
     onContactsChange(updated);
-    saveContacts(updated);
   }
 
-  function handleCardClick(contact: Contact) {
-    if (isDragging) return;
+  const handleCardClick = useCallback((contact: Contact) => {
+    if (isDraggingRef.current) return;
     onCardClick(contact);
-  }
+  }, [onCardClick]);
 
-  const maxScore = useMemo(
-    () => contacts.length ? Math.max(...contacts.map((c) => c.score ?? 0)) : 0,
+  const priorityContactId = useMemo(
+    () => getPriorityContact(contacts)?.id,
     [contacts]
   );
 
+  const contactsByStage = useMemo(() => {
+    const map = new Map<Stage, Contact[]>();
+    for (const stage of STAGES) {
+      map.set(stage.id, contacts.filter((c) => c.stage === stage.id));
+    }
+    return map;
+  }, [contacts]);
+
   return (
-    <div data-tour="board" className="flex flex-col flex-1 overflow-hidden">
+    <div data-tour="board" className="min-h-[600px]">
       <DndContext
         sensors={sensors}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex gap-4 px-6 py-4 overflow-x-auto flex-1 items-start">
+        {/* xl+: CSS grid (sticky headers work). <xl: flex + horizontal scroll. */}
+        <div className="flex gap-4 overflow-x-auto items-start pb-2 xl:grid xl:grid-cols-4 xl:overflow-x-visible xl:pb-8">
           {STAGES.map((stage) => (
             <KanbanColumn
               key={stage.id}
               stage={stage}
-              contacts={contacts.filter((c) => c.stage === stage.id)}
+              contacts={contactsByStage.get(stage.id)!}
               onCardClick={handleCardClick}
-              priorityContactId={maxScore > 0 ? contacts.find((c) => c.score === maxScore)?.id : undefined}
+              priorityContactId={priorityContactId}
             />
           ))}
         </div>

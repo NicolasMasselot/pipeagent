@@ -22,6 +22,7 @@ interface ContactDetailSheetProps {
   onOpenChange: (open: boolean) => void;
   onUpdate: (contact: Contact) => void;
   forcedTab?: string;
+  preventOutsideClose?: boolean;
 }
 
 export default function ContactDetailSheet({
@@ -30,6 +31,7 @@ export default function ContactDetailSheet({
   onOpenChange,
   onUpdate,
   forcedTab,
+  preventOutsideClose,
 }: ContactDetailSheetProps) {
   const [activeTab, setActiveTab] = useState("research");
 
@@ -44,7 +46,7 @@ export default function ContactDetailSheet({
   }
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <Sheet open={open} onOpenChange={onOpenChange} modal={!preventOutsideClose}>
       <SheetContent
         side="right"
         className="sm:max-w-[560px] bg-surface border-border flex flex-col gap-0 p-0 overflow-y-auto"

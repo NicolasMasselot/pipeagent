@@ -47,14 +47,11 @@ vercel --prod
 - Bulk scoring is sequential (not parallel) to respect API rate limits
 - `getScoreThreshold()` in `lib/utils/format.ts` → "success" | "warning" | "danger"
 - Dark mode forced via `className="dark"` on `<html>` — no toggle
-- Model hardcoded as `claude-sonnet-4-5` in `app/api/claude/route.ts` (should be updated to `claude-sonnet-4-6`)
+- Model: `claude-sonnet-4-6` in `app/api/claude/route.ts`
 - CSS design tokens in `app/globals.css` — surfaces use `oklch` with indigo tint (~hue 272)
 - Animated glow: `@property --gx/--gy` interpolated in `@keyframes glow-drift` on `body`, 22s loop
 
 ## Known issues (below 80 code review threshold)
-
-- `PipelineBoard`: `isDragging` state + 50ms setTimeout is fragile — dropping a card may open the sheet. Fix: use `useRef` instead of useState.
-- `PipelineBoard.handleDragEnd` calls `saveContacts()` AND `onContactsChange` (which also calls `saveContacts`) — double write on every drag.
 - Bulk scoring uses stale contact snapshot — concurrent edits during bulk score may be overwritten.
 - `rationale` field returned by Claude scoring prompt is discarded (not stored on Contact).
 

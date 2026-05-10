@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import type { Contact } from "@/lib/types/contact";
+import type { Contact, SheetTab } from "@/lib/types/contact";
 import { loadContacts, saveContacts, resetContacts } from "@/lib/storage/contacts-store";
 import { scoreContact, applyScoreResult } from "@/lib/ai/scoring";
 import { USER_PROFILE } from "@/lib/data/profile";
@@ -20,7 +20,7 @@ export default function HomePage() {
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
-  const [forcedTab, setForcedTab] = useState<string | undefined>(undefined);
+  const [forcedTab, setForcedTab] = useState<SheetTab | undefined>(undefined);
   const [bulkProgress, setBulkProgress] = useState<{ done: number; total: number } | null>(null);
   const [addContactOpen, setAddContactOpen] = useState(false);
 
@@ -28,10 +28,10 @@ export default function HomePage() {
     setContacts(loadContacts());
   }, []);
 
-  function handleCardClick(contact: Contact) {
+  const handleCardClick = useCallback((contact: Contact) => {
     setSelectedContact(contact);
     setSheetOpen(true);
-  }
+  }, []);
 
   function handleContactUpdate(updated: Contact) {
     setContacts((prev) => {
@@ -39,7 +39,6 @@ export default function HomePage() {
       saveContacts(newContacts);
       return newContacts;
     });
-    /* Keep selectedContact in sync so the open sheet reflects bulk score updates */
     setSelectedContact((prev) => (prev?.id === updated.id ? updated : prev));
   }
 
@@ -50,15 +49,12 @@ export default function HomePage() {
 
     toast("Contact ajouté · scoring en cours…");
 
-    /* Fire-and-forget: score in background, update when done */
     scoreContact(contact, USER_PROFILE)
       .then((result) => {
         handleContactUpdate(applyScoreResult(contact, result));
         toast.success(`Score calculé pour ${contact.firstName} ${contact.lastName}`);
       })
-      .catch(() => {
-        /* Silent failure — contact is still added, just unscored */
-      });
+      .catch(() => {});
   }
 
   async function handleBulkScore() {
@@ -73,9 +69,8 @@ export default function HomePage() {
       try {
         const result = await scoreContact(contact, USER_PROFILE);
         handleContactUpdate(applyScoreResult(contact, result));
-      } catch (err) {
+      } catch {
         errorCount++;
-        /* Continue on failure so a single bad contact doesn't abort the batch */
       }
       setBulkProgress({ done: i + 1, total: unscoredContacts.length });
     }
@@ -87,6 +82,13 @@ export default function HomePage() {
     }
   }
 
+  const closeSheet = useCallback(() => setSheetOpen(false), []);
+  const selectTab = useCallback((tab: SheetTab) => setForcedTab(tab), []);
+  const closeTour = useCallback(() => {
+    setTourOpen(false);
+    setForcedTab(undefined);
+  }, []);
+
   const allScored = contacts.length > 0 && contacts.every((c) => !!c.score);
   const isBulkRunning = bulkProgress !== null;
 
@@ -94,49 +96,51 @@ export default function HomePage() {
     <>
       <WelcomeDialog onStartTour={() => setTourOpen(true)} />
       <Topbar onAddContact={() => setAddContactOpen(true)} />
-      <Hero onStartTour={() => setTourOpen(true)} />
 
-      <div className="flex items-center justify-end gap-3 px-6 pb-2">
-        {isBulkRunning && (
-          <span className="text-xs font-mono text-muted-foreground">
-            {bulkProgress.done} / {bulkProgress.total} scorés
-          </span>
-        )}
+      <main className="px-6 pb-12">
+        <Hero onStartTour={() => setTourOpen(true)} />
 
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleBulkScore}
-          disabled={allScored || isBulkRunning}
-          className="text-xs text-muted-foreground"
-        >
-          {isBulkRunning ? "Scoring…" : "Scorer tous les contacts"}
-        </Button>
+        {/* Board toolbar */}
+        <div className="flex items-center justify-end gap-2 mb-3">
+          {isBulkRunning && (
+            <span className="text-xs font-mono text-muted-foreground">
+              {bulkProgress.done} / {bulkProgress.total} scorés
+            </span>
+          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleBulkScore}
+            disabled={allScored || isBulkRunning}
+            className="text-xs text-muted-foreground"
+          >
+            {isBulkRunning ? "Scoring…" : "Scorer tous les contacts"}
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            disabled={isBulkRunning}
+            onClick={() => {
+              if (!window.confirm("Réinitialiser la pipeline aux contacts d'origine ?")) return;
+              const seed = resetContacts();
+              setContacts(seed);
+              setSelectedContact(null);
+            }}
+            className="text-xs text-muted-foreground"
+          >
+            Reset pipeline
+          </Button>
+        </div>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          disabled={isBulkRunning}
-          onClick={() => {
-            if (!window.confirm("Réinitialiser la pipeline aux contacts d'origine ?")) return;
-            const seed = resetContacts();
-            setContacts(seed);
-            setSelectedContact(null);
+        <PipelineBoard
+          contacts={contacts}
+          onContactsChange={(updated) => {
+            setContacts(updated);
+            saveContacts(updated);
           }}
-          className="text-xs text-muted-foreground"
-        >
-          Reset pipeline
-        </Button>
-      </div>
-
-      <PipelineBoard
-        contacts={contacts}
-        onContactsChange={(updated) => {
-          setContacts(updated);
-          saveContacts(updated);
-        }}
-        onCardClick={handleCardClick}
-      />
+          onCardClick={handleCardClick}
+        />
+      </main>
 
       <ContactDetailSheet
         contact={selectedContact}
@@ -144,6 +148,7 @@ export default function HomePage() {
         onOpenChange={setSheetOpen}
         onUpdate={handleContactUpdate}
         forcedTab={forcedTab}
+        preventOutsideClose={tourOpen}
       />
 
       <AddContactDialog
@@ -154,17 +159,11 @@ export default function HomePage() {
 
       <DemoTour
         open={tourOpen}
-        onClose={() => {
-          setTourOpen(false);
-          setForcedTab(undefined);
-        }}
+        onClose={closeTour}
         contacts={contacts}
-        onOpenSheet={(contact) => {
-          setSelectedContact(contact);
-          setSheetOpen(true);
-        }}
-        onCloseSheet={() => setSheetOpen(false)}
-        onSelectTab={(tab) => setForcedTab(tab)}
+        onOpenSheet={handleCardClick}
+        onCloseSheet={closeSheet}
+        onSelectTab={selectTab}
       />
     </>
   );
