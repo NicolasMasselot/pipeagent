@@ -2,6 +2,8 @@
 
 # PipeAgent — Agentic CRM
 
+![PipeAgent screenshot](./public/screenshot.png)
+
 PipeAgent est un CRM agentique conçu pour la recherche de stage en sales tech. Il combine une pipeline Kanban avec des features IA (Claude) pour gérer les contacts, préparer les appels, rédiger des emails personnalisés et prioriser les prospects par scoring.
 
 ## Features
@@ -38,8 +40,3 @@ Ouvre [http://localhost:3000](http://localhost:3000).
 
 Tous les contacts sont fictifs et générés pour la démo. Aucune correspondance avec des personnes réelles. Un bouton "Reset pipeline" permet de restaurer le seed à tout moment.
 
-## Screenshot
-
-Place your screenshot at `public/screenshot.png` (recommended: **1280×800px, PNG**).
-
-It will automatically appear as the OG image in social link previews (iMessage, LinkedIn, Slack) once added.

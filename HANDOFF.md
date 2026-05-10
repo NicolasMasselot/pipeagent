@@ -22,14 +22,17 @@ Agentic CRM for Nicolas Masselot (M1 ESCP) — internship hunting in sales tech 
 - **PR #2** — Kanban board, drag-and-drop, localStorage, seed contacts
 - **PR #3** — Claude API proxy, ResearchPanel, EmailPanel, ScorePanel, bulk scoring, shared utils
 - **PR #4** — WelcomeDialog, toast.error on all AI calls, favicon, metadata, README
-- **Design polish** — animated indigo glow background (`@property` gradient drift), indigo-tinted surfaces, card shadows, sidebar gradient, glass topbar
+- **PR #5** — Phase 7 layout refacto (sidebar removed, full-width sticky topbar, grid+sticky column headers on xl+, flex+horizontal-scroll on smaller), guided demo tour with Sheet `modal={false}` to bypass Radix DismissableLayer, robust spotlight polling (cancellable, requires non-zero rect), `Add contact` via Claude LinkedIn-bio parsing, company logos (Clearbit + initials fallback), drag perf fixes (memo, useMemo, useCallback, scoped transitions, isDraggingRef with 50ms reset)
+- **Design polish** — animated indigo glow background (`@property` gradient drift), indigo-tinted surfaces, card shadows, glass topbar
 
 ## Current state
 
-- Branch: `main`, up to date with origin
+- Branch: `main`, up to date with origin (PR #5 squash-merged 2026-05-10)
 - Vercel CLI installed (v53.3.1), logged in, project linked at `.vercel/`
 - `ANTHROPIC_API_KEY` set in Vercel production env
 - `vercel.json` committed — maxDuration 30s for `/api/claude`
+- Production deployed: https://pipeagent.vercel.app reflects post-PR#5 layout
+- `public/screenshot.png` checked in and embedded in README
 
 ## IMPORTANT: Deployment is manual
 
@@ -54,7 +57,8 @@ vercel --prod
 ## Known issues (below 80 code review threshold)
 - Bulk scoring uses stale contact snapshot — concurrent edits during bulk score may be overwritten.
 - `rationale` field returned by Claude scoring prompt is discarded (not stored on Contact).
+- DemoTour step-effect deps include `contacts` — if contacts mutate during the tour (bulk score landing, drag end), the effect re-fires and resets the current step's auto-advance. Not hit in normal flow; only matters if user triggers bulk scoring while the tour is running.
 
 ## Still to do manually
 
-- Take a screenshot of https://pipeagent.vercel.app, save as `public/screenshot.png`, commit + push, then update README.md (replace the "À ajouter" placeholder).
+- Refresh `public/screenshot.png` after meaningful UI changes (use `node /tmp/screenshot.mjs` pattern: headless Chrome + CDP `Page.addScriptToEvaluateOnNewDocument` to set `pipeagent.welcomed.v1` before navigation).
