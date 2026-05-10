@@ -38,7 +38,8 @@ export default function PipelineBoard({
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
-    isDraggingRef.current = false;
+    /* Delay reset so the synthetic onClick fired after pointerup still sees true. */
+    setTimeout(() => { isDraggingRef.current = false; }, 50);
 
     if (!over) return;
 
