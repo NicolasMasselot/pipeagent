@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PipeAgent — Agentic CRM
 
-## Getting Started
+PipeAgent est un CRM agentique conçu pour la recherche de stage en sales tech. Il combine une pipeline Kanban avec des features IA (Claude) pour gérer les contacts, préparer les appels, rédiger des emails personnalisés et prioriser les prospects par scoring.
 
-First, run the development server:
+## Features
+
+- **Pipeline visuelle** — Kanban drag-and-drop avec persistance locale (localStorage)
+- **Recherche pre-call IA** — Brief entreprise, profil contact, 3 angles de pitch et 3 questions à poser, générés par Claude
+- **Emails contextuels** — Génération de cold emails, relances et follow-ups personnalisés selon le contact et la recherche disponible
+- **Lead scoring** — Score 0-100 sur 3 axes (probabilité de réponse, fit profil, timing recrutement) avec scoring en lot
+
+## Stack
+
+- **Framework** — Next.js 14+ (App Router, TypeScript strict)
+- **UI** — Tailwind CSS v4, shadcn/ui (preset Nova), Radix UI
+- **Drag-and-drop** — @dnd-kit/core
+- **IA** — Anthropic Claude (via proxy route serveur `/api/claude`)
+- **Persistance** — localStorage (pas de base de données)
+- **Notifications** — Sonner
+
+## Run locally
 
 ```bash
+git clone https://github.com/NicolasMasselot/pipeagent.git
+cd pipeagent
+npm install
+cp .env.local.example .env.local
+# Ajouter ta clé Anthropic dans .env.local :
+# ANTHROPIC_API_KEY=sk-ant-...
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvre [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Demo data
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5 contacts réels sont pré-chargés au premier lancement (stockés en localStorage). Un bouton "Reset pipeline" permet de les restaurer à tout moment.
 
-## Learn More
+## Screenshot
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> À ajouter — capture d'écran ou GIF de démonstration

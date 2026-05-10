@@ -5,21 +5,24 @@ import { Toaster } from "@/components/ui/sonner";
 import Sidebar from "@/components/layout/Sidebar";
 import "./globals.css";
 
-/* Geist Sans — police principale pour tout le texte UI */
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-/* Geist Mono — police pour les chiffres, scores et code */
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "PipeAgent",
-  description: "Agentic CRM for sales tech internship hunting.",
+  title: "PipeAgent — Agentic CRM",
+  description: "CRM agentique pour candidatures sales tech. Pipeline visuelle, recherche pre-call IA, génération d'emails et lead scoring.",
+  openGraph: {
+    title: "PipeAgent — Agentic CRM",
+    description: "CRM agentique pour candidatures sales tech.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -28,14 +31,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    /* dark = thème sombre forcé comme défaut de l'application */
     <html
       lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
     >
       <body className="h-full">
         <TooltipProvider>
-          {/* Shell principal : sidebar fixe à gauche + zone de contenu scrollable */}
           <div className="flex h-screen overflow-hidden">
             <Sidebar />
             <main className="flex-1 flex flex-col overflow-y-auto">

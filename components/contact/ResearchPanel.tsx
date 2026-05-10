@@ -6,6 +6,7 @@ import { USER_PROFILE } from "@/lib/data/profile";
 import { generateResearch } from "@/lib/ai/research";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { formatRelativeDate } from "@/lib/utils/format";
 
 interface ResearchPanelProps {
@@ -68,7 +69,9 @@ export default function ResearchPanel({ contact, onUpdate }: ResearchPanelProps)
       const research = await generateResearch(contact, USER_PROFILE);
       onUpdate({ ...contact, research });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur lors de la génération");
+      const msg = err instanceof Error ? err.message : "Erreur lors de la génération";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
