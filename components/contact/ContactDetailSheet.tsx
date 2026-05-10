@@ -50,6 +50,7 @@ export default function ContactDetailSheet({
       <SheetContent
         side="right"
         className="sm:max-w-[560px] bg-surface border-border flex flex-col gap-0 p-0 overflow-y-auto"
+        onInteractOutside={(e) => { if (preventOutsideClose) e.preventDefault(); }}
       >
         <SheetHeader className="px-6 py-5 border-b border-border shrink-0">
           <div className="flex items-start gap-4">
