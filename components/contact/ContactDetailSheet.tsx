@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { Contact } from "@/lib/types/contact";
 import {
   Sheet,
@@ -19,6 +20,7 @@ interface ContactDetailSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onUpdate: (contact: Contact) => void;
+  forcedTab?: string;
 }
 
 export default function ContactDetailSheet({
@@ -26,7 +28,18 @@ export default function ContactDetailSheet({
   open,
   onOpenChange,
   onUpdate,
+  forcedTab,
 }: ContactDetailSheetProps) {
+  const [activeTab, setActiveTab] = useState("research");
+
+  /* Reset tab when contact changes */
+  useEffect(() => { setActiveTab("research"); }, [contact?.id]);
+
+  /* Tour can override the active tab */
+  useEffect(() => {
+    if (forcedTab) setActiveTab(forcedTab);
+  }, [forcedTab]);
+
   if (!contact) return null;
 
   function handleNotesBlur(notes: string) {
@@ -65,23 +78,35 @@ export default function ContactDetailSheet({
             </div>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-4" data-tour="sheet-score">
             <ScorePanel contact={contact} onUpdate={onUpdate} />
           </div>
         </SheetHeader>
 
-        <Tabs defaultValue="research" className="flex flex-col flex-1 overflow-hidden">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="flex flex-col flex-1 overflow-hidden"
+        >
           <TabsList className="mx-6 mt-4 shrink-0 w-fit">
             <TabsTrigger value="research">Recherche</TabsTrigger>
             <TabsTrigger value="emails">Emails</TabsTrigger>
             <TabsTrigger value="notes">Notes</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="research" className="flex-1 overflow-y-auto px-6 py-4">
+          <TabsContent
+            value="research"
+            data-tour="sheet-research"
+            className="flex-1 overflow-y-auto px-6 py-4"
+          >
             <ResearchPanel contact={contact} onUpdate={onUpdate} />
           </TabsContent>
 
-          <TabsContent value="emails" className="flex-1 overflow-y-auto px-6 py-4">
+          <TabsContent
+            value="emails"
+            data-tour="sheet-emails"
+            className="flex-1 overflow-y-auto px-6 py-4"
+          >
             <EmailPanel contact={contact} onUpdate={onUpdate} />
           </TabsContent>
 

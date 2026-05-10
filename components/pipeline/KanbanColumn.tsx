@@ -9,9 +9,10 @@ interface KanbanColumnProps {
   stage: { id: Stage; label: string; color: string };
   contacts: Contact[];
   onCardClick: (contact: Contact) => void;
+  priorityContactId?: string;
 }
 
-export default function KanbanColumn({ stage, contacts, onCardClick }: KanbanColumnProps) {
+export default function KanbanColumn({ stage, contacts, onCardClick, priorityContactId }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id: stage.id });
 
   return (
@@ -36,6 +37,7 @@ export default function KanbanColumn({ stage, contacts, onCardClick }: KanbanCol
             key={contact.id}
             contact={contact}
             onClick={() => onCardClick(contact)}
+            isPriority={contact.id === priorityContactId}
           />
         ))}
       </div>

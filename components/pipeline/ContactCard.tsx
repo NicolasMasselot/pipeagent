@@ -10,9 +10,10 @@ import ScoreBadge from "./ScoreBadge";
 interface ContactCardProps {
   contact: Contact;
   onClick: () => void;
+  isPriority?: boolean;
 }
 
-export default function ContactCard({ contact, onClick }: ContactCardProps) {
+export default function ContactCard({ contact, onClick, isPriority }: ContactCardProps) {
   const { firstName, lastName, role, company, score, lastInteraction } = contact;
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
@@ -32,6 +33,7 @@ export default function ContactCard({ contact, onClick }: ContactCardProps) {
       {...listeners}
       {...attributes}
       onClick={onClick}
+      {...(isPriority ? { "data-tour": "card-priority" } : {})}
       className={cn(
         "border border-border rounded-lg p-3 pipe-card-shadow",
         "cursor-grab active:cursor-grabbing transition-all duration-150",

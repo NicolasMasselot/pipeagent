@@ -20,7 +20,11 @@ const FEATURES = [
   "Lead scoring — 3 axes pour prioriser tes contacts",
 ];
 
-export default function WelcomeDialog() {
+interface WelcomeDialogProps {
+  onStartTour?: () => void;
+}
+
+export default function WelcomeDialog({ onStartTour }: WelcomeDialogProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -32,6 +36,7 @@ export default function WelcomeDialog() {
   function handleStart() {
     localStorage.setItem(WELCOME_KEY, "true");
     setOpen(false);
+    onStartTour?.();
   }
 
   return (
@@ -60,7 +65,7 @@ export default function WelcomeDialog() {
         </ul>
 
         <p className="text-xs text-muted-foreground border-t border-border pt-4">
-          5 contacts réels pré-chargés. Toutes les données sont stockées localement dans ton navigateur.
+          8 contacts fictifs pré-chargés. Toutes les données sont stockées localement dans ton navigateur.
         </p>
 
         <DialogFooter>
@@ -68,7 +73,7 @@ export default function WelcomeDialog() {
             onClick={handleStart}
             className="w-full bg-pipe-accent hover:bg-pipe-accent-hover text-white"
           >
-            Commencer
+            Lancer la démo guidée
           </Button>
         </DialogFooter>
       </DialogContent>

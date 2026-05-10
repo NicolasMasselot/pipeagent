@@ -11,6 +11,7 @@ import Hero from "@/components/layout/Hero";
 import WelcomeDialog from "@/components/layout/WelcomeDialog";
 import PipelineBoard from "@/components/pipeline/PipelineBoard";
 import ContactDetailSheet from "@/components/contact/ContactDetailSheet";
+import DemoTour from "@/components/demo/DemoTour";
 import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
@@ -18,6 +19,7 @@ export default function HomePage() {
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
+  const [forcedTab, setForcedTab] = useState<string | undefined>(undefined);
   const [bulkProgress, setBulkProgress] = useState<{ done: number; total: number } | null>(null);
 
   useEffect(() => {
@@ -70,12 +72,9 @@ export default function HomePage() {
 
   return (
     <>
-      <WelcomeDialog />
+      <WelcomeDialog onStartTour={() => setTourOpen(true)} />
       <Topbar />
-      <Hero onStartTour={() => {
-        setTourOpen(true);
-        console.log("Tour started — à implémenter en 6.3");
-      }} />
+      <Hero onStartTour={() => setTourOpen(true)} />
 
       <div className="flex items-center justify-end gap-3 px-6 pb-2">
         {isBulkRunning && (
@@ -124,6 +123,22 @@ export default function HomePage() {
         open={sheetOpen}
         onOpenChange={setSheetOpen}
         onUpdate={handleContactUpdate}
+        forcedTab={forcedTab}
+      />
+
+      <DemoTour
+        open={tourOpen}
+        onClose={() => {
+          setTourOpen(false);
+          setForcedTab(undefined);
+        }}
+        contacts={contacts}
+        onOpenSheet={(contact) => {
+          setSelectedContact(contact);
+          setSheetOpen(true);
+        }}
+        onCloseSheet={() => setSheetOpen(false)}
+        onSelectTab={(tab) => setForcedTab(tab)}
       />
     </>
   );

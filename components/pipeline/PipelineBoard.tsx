@@ -63,8 +63,12 @@ export default function PipelineBoard({
     onCardClick(contact);
   }
 
+  const maxScore = contacts.length
+    ? Math.max(...contacts.map((c) => c.score ?? 0))
+    : 0;
+
   return (
-    <div className="flex flex-col flex-1 overflow-hidden">
+    <div data-tour="board" className="flex flex-col flex-1 overflow-hidden">
       <DndContext
         sensors={sensors}
         onDragStart={handleDragStart}
@@ -77,6 +81,7 @@ export default function PipelineBoard({
               stage={stage}
               contacts={contacts.filter((c) => c.stage === stage.id)}
               onCardClick={handleCardClick}
+              priorityContactId={maxScore > 0 ? contacts.find((c) => c.score === maxScore)?.id : undefined}
             />
           ))}
         </div>
