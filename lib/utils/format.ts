@@ -1,9 +1,15 @@
-/* Utilitaires de formatage des dates et valeurs d'affichage */
+export function getInitials(firstName: string, lastName: string): string {
+  return `${firstName[0] ?? ""}${lastName[0] ?? ""}`.toUpperCase();
+}
 
-/*
- * Formate une date ISO en durée relative lisible.
- * Exemples : "aujourd'hui", "il y a 3j", "—" si undefined.
- */
+export type ScoreLevel = "success" | "warning" | "danger";
+
+export function getScoreThreshold(score: number): ScoreLevel {
+  if (score > 70) return "success";
+  if (score >= 40) return "warning";
+  return "danger";
+}
+
 export function formatRelativeDate(iso?: string): string {
   if (!iso) return "—";
 
