@@ -11,6 +11,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { getInitials } from "@/lib/utils/format";
+import CompanyLogo from "./CompanyLogo";
 import ResearchPanel from "./ResearchPanel";
 import EmailPanel from "./EmailPanel";
 import ScorePanel from "./ScorePanel";
@@ -50,10 +51,22 @@ export default function ContactDetailSheet({
       >
         <SheetHeader className="px-6 py-5 border-b border-border shrink-0">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-full bg-pipe-accent flex items-center justify-center shrink-0">
-              <span className="text-white text-base font-semibold leading-none select-none">
-                {getInitials(contact.firstName, contact.lastName)}
-              </span>
+            <div className="relative shrink-0">
+              <div className="w-12 h-12 rounded-full bg-pipe-accent flex items-center justify-center">
+                <span className="text-white text-base font-semibold leading-none select-none">
+                  {getInitials(contact.firstName, contact.lastName)}
+                </span>
+              </div>
+              {contact.companyDomain && (
+                <div className="absolute -bottom-1 -right-1">
+                  <CompanyLogo
+                    domain={contact.companyDomain}
+                    name={contact.company}
+                    size={22}
+                    className="shadow-sm"
+                  />
+                </div>
+              )}
             </div>
             <div className="flex flex-col gap-0.5 min-w-0">
               <SheetTitle className="text-base font-semibold text-foreground leading-tight">

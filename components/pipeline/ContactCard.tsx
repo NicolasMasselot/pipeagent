@@ -6,6 +6,7 @@ import type { Contact } from "@/lib/types/contact";
 import { formatRelativeDate, getInitials } from "@/lib/utils/format";
 import { cn } from "@/lib/utils";
 import ScoreBadge from "./ScoreBadge";
+import CompanyLogo from "@/components/contact/CompanyLogo";
 
 interface ContactCardProps {
   contact: Contact;
@@ -14,7 +15,7 @@ interface ContactCardProps {
 }
 
 export default function ContactCard({ contact, onClick, isPriority }: ContactCardProps) {
-  const { firstName, lastName, role, company, score, lastInteraction } = contact;
+  const { firstName, lastName, role, company, companyDomain, score, lastInteraction } = contact;
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: contact.id,
@@ -47,9 +48,10 @@ export default function ContactCard({ contact, onClick, isPriority }: ContactCar
             {getInitials(firstName, lastName)}
           </span>
         </div>
-        <span className="text-sm font-medium text-foreground truncate">
+        <span className="text-sm font-medium text-foreground truncate flex-1">
           {firstName} {lastName}
         </span>
+        <CompanyLogo domain={companyDomain} name={company} size={28} />
       </div>
 
       <p className="mt-1.5 text-xs text-muted-foreground truncate">{role}</p>
