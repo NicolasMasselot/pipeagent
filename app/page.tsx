@@ -7,6 +7,7 @@ import { loadContacts, saveContacts, resetContacts } from "@/lib/storage/contact
 import { scoreContact, applyScoreResult } from "@/lib/ai/scoring";
 import { USER_PROFILE } from "@/lib/data/profile";
 import Topbar from "@/components/layout/Topbar";
+import Hero from "@/components/layout/Hero";
 import WelcomeDialog from "@/components/layout/WelcomeDialog";
 import PipelineBoard from "@/components/pipeline/PipelineBoard";
 import ContactDetailSheet from "@/components/contact/ContactDetailSheet";
@@ -16,6 +17,7 @@ export default function HomePage() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [tourOpen, setTourOpen] = useState(false);
   const [bulkProgress, setBulkProgress] = useState<{ done: number; total: number } | null>(null);
 
   useEffect(() => {
@@ -69,9 +71,13 @@ export default function HomePage() {
   return (
     <>
       <WelcomeDialog />
-      <Topbar title="Pipeline" />
+      <Topbar />
+      <Hero onStartTour={() => {
+        setTourOpen(true);
+        console.log("Tour started — à implémenter en 6.3");
+      }} />
 
-      <div className="flex items-center justify-end gap-3 px-6 pt-3">
+      <div className="flex items-center justify-end gap-3 px-6 pb-2">
         {isBulkRunning && (
           <span className="text-xs font-mono text-muted-foreground">
             {bulkProgress.done} / {bulkProgress.total} scorés

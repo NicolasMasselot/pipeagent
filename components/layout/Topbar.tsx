@@ -9,10 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface TopbarProps {
-  /* Titre de la page courante affiché à gauche */
-  title: string;
-}
+interface TopbarProps {}
 
 /* Indicateur de statut de la clé API Claude */
 function ClaudeApiStatus() {
@@ -44,16 +41,11 @@ function ClaudeApiStatus() {
   );
 }
 
-export default function Topbar({ title }: TopbarProps) {
+export default function Topbar({}: TopbarProps) {
   return (
-    <header className="flex items-center justify-between h-14 px-6 border-b border-border shrink-0 bg-[oklch(0.08_0.005_285_/_0.80)] backdrop-blur-md">
+    <header className="flex items-center justify-end h-14 px-6 border-b border-border shrink-0 bg-[oklch(0.08_0.005_285_/_0.80)] backdrop-blur-md">
 
-      {/* Titre de la page */}
-      <h1 className="text-sm font-semibold text-foreground tracking-tight">
-        {title}
-      </h1>
-
-      {/* Actions droite : bouton + statut API */}
+      {/* Actions : bouton + statut API */}
       <div className="flex items-center gap-4">
         {/* Bouton "Add contact" désactivé en V1 */}
         <Tooltip>
