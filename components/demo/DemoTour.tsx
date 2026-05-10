@@ -164,8 +164,7 @@ export default function DemoTour({
     }, actionDelay);
 
     return () => { cancelled = true; };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step, open]);
+  }, [step, open, contacts, onOpenSheet, onCloseSheet, onSelectTab]);
 
   function handleNext() {
     if (autoRef.current) { clearTimeout(autoRef.current); autoRef.current = null; }

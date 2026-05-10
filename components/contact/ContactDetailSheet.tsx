@@ -32,13 +32,9 @@ export default function ContactDetailSheet({
 }: ContactDetailSheetProps) {
   const [activeTab, setActiveTab] = useState("research");
 
-  /* Reset tab when contact changes */
-  useEffect(() => { setActiveTab("research"); }, [contact?.id]);
-
-  /* Tour can override the active tab */
   useEffect(() => {
-    if (forcedTab) setActiveTab(forcedTab);
-  }, [forcedTab]);
+    setActiveTab(forcedTab ?? "research");
+  }, [forcedTab, contact?.id]);
 
   if (!contact) return null;
 

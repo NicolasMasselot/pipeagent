@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   DndContext,
   PointerSensor,
@@ -63,9 +63,10 @@ export default function PipelineBoard({
     onCardClick(contact);
   }
 
-  const maxScore = contacts.length
-    ? Math.max(...contacts.map((c) => c.score ?? 0))
-    : 0;
+  const maxScore = useMemo(
+    () => contacts.length ? Math.max(...contacts.map((c) => c.score ?? 0)) : 0,
+    [contacts]
+  );
 
   return (
     <div data-tour="board" className="flex flex-col flex-1 overflow-hidden">
