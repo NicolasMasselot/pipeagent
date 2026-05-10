@@ -28,18 +28,18 @@ export function getSeedContacts(): Contact[] {
       research: {
         generatedAt: d(27),
         companyBrief:
-          "Databricks est le leader du data lakehouse, valorisé 62 Mds$ post-série J (2024). La plateforme unifie data engineering, analytics et ML sur un même runtime (Delta Lake + MLflow). En 2025, l'acquisition de Mosaic ML a accéléré le virage LLM : Databricks vend désormais DBRX et des solutions de fine-tuning souverain aux grands comptes européens. La croissance ARR est estimée à 50 %+ en EMEA, avec une forte dynamique dans les secteurs finance et public.",
+          "Databricks est le leader du data lakehouse, valorisé 62 Mds$ après sa série J en 2024. Sa plateforme unifie data engineering, analytics et machine learning sur un même runtime (Delta Lake, MLflow). L'acquisition de Mosaic AI a accéléré le virage LLM : Databricks commercialise désormais DBRX et des solutions de fine-tuning souverain auprès des grands comptes européens. La croissance ARR dépasse 50 % en EMEA, portée notamment par les secteurs public et retail tech.",
         personProfile:
-          "Théo Marchetti est Account Executive chez Databricks Paris depuis 18 mois, après un passage de 2 ans chez Talend. Profil chasseur mid-market/entreprise, terrain couvert principalement BNP, Société Générale et scale-ups fintech. Actif sur LinkedIn, publie sur les usages data en finance — signal d'ouverture aux profils juniors avec bagage finance + tech.",
+          "Théo Marchetti est Account Executive chez Databricks Paris depuis 18 mois, après deux ans chez Talend. Il couvre un portefeuille mid-market à entreprise et est actif sur LinkedIn, où il publie régulièrement sur les usages data en entreprise. Son profil de chasseur et son activité éditoriale indiquent une ouverture aux profils juniors capables de s'intégrer rapidement dans un cycle de vente technique.",
         pitchAngles: [
-          "Mon passage chez Investance Partners m'a confronté aux problématiques de formation sur produits complexes — exactement le terrain où Databricks cherche des profils capables de parler data et finance simultanément.",
-          "J'ai développé Carry Regime Compass et PipeAgent (CRM agentique en prod) — ce type de réalisation démontre que je construis des choses concrètes, pas uniquement que j'étudie des cas.",
-          "Avec l'accélération EMEA de Databricks, les équipes sales ont besoin de profils juniors capables de monter vite en compétence technique. Mon double profil ESCP + certification API Claude est directement actionnable.",
+          "Chez Investance Partners, j'ai animé quatre sessions de formation sur site pour 40 utilisateurs d'une grande banque et obtenu 4,5/5 de satisfaction. Adapter un discours technique à des interlocuteurs non-experts est au cœur du métier en solutions sales — et c'est quelque chose que j'ai déjà mis en pratique concrètement.",
+          "J'ai construit PipeAgent, un CRM agentique déployé en production, en partant de zéro. Ce n'est pas un projet d'école : c'est un outil réel, avec des utilisateurs. Cela montre que je comprends les problématiques des équipes sales tech de l'intérieur, pas seulement en cours.",
+          "Mon profil ESCP M1, combiné à une pratique réelle des LLMs (Claude Code, MCPs, PipeAgent en production), est rare pour un junior en sales. Chez Databricks, qui vend de plus en plus de solutions AI à des équipes data, ce double ancrage est directement utile.",
         ],
         questions: [
-          "Quelle est la part des deals initiés par des SDRs vs inbound dans ton segment mid-market ?",
+          "Quelle est la part des deals initiés par des SDRs par rapport à l'inbound dans ton segment mid-market ?",
           "Comment Databricks positionne-t-il DBRX face à OpenAI dans les appels d'offres grands comptes ?",
-          "Est-ce que l'équipe Paris recrute des stagiaires sales sur les cycles de vente ou plutôt en support enablement ?",
+          "Les stagiaires sales chez Databricks participent-ils aux cycles de vente directement, ou plutôt aux tâches de préparation et d'enablement ?",
         ],
       },
     },
@@ -61,16 +61,16 @@ export function getSeedContacts(): Contact[] {
           id: crypto.randomUUID(),
           type: "cold",
           generatedAt: d(17),
-          subject: "Stage sales tech – profil ESCP, certifié AMF & Claude API",
+          subject: "Stage sales tech – M1 ESCP, formateur et builder",
           body: `Bonjour Camille,
 
-Je suis Nicolas Masselot, étudiant en M1 à ESCP Business School, en recherche d'un stage de 6 mois en sales tech à partir de juin 2026.
+Je suis Nicolas Masselot, M1 à ESCP Business School, en recherche d'un stage de six mois en sales tech à partir de juin 2026.
 
-Votre rôle de Solutions Engineer chez HashiCorp m'a particulièrement retenu : la vente de solutions d'infrastructure complexes (Terraform, Vault) à des équipes DevOps suppose exactement le type de posture consultative que je cherche à développer.
+Votre rôle de Solutions Engineer chez HashiCorp m'a particulièrement retenu : vendre Terraform et Vault à des équipes DevOps implique une posture consultative, à la frontière du technique et du commercial, que je cherche à développer.
 
-Mon parcours mêle finance (Investance Partners, certification AMF) et tech (certifié Building with the Claude API, projet PipeAgent en production). Je suis à l'aise pour parler à des interlocuteurs techniques autant que business.
+Mon profil combine formation grande école et pratique réelle des outils tech : j'ai animé des formations pour 40 utilisateurs chez Investance Partners (4,5/5) et construit PipeAgent, un CRM agentique déployé en production. Je suis à l'aise pour dialoguer avec des interlocuteurs techniques comme avec des décideurs business.
 
-Seriez-vous disponible pour un échange de 20 minutes la semaine prochaine ?
+Seriez-vous disponible pour un échange de 20 minutes ?
 
 — Nicolas`,
         },
@@ -96,12 +96,12 @@ Seriez-vous disponible pour un échange de 20 minutes la semaine prochaine ?
           id: crypto.randomUUID(),
           type: "cold",
           generatedAt: d(5),
-          subject: "Stage sales AI – M1 ESCP, double profil finance + tech",
+          subject: "Stage sales AI – M1 ESCP, utilisateur avancé des LLMs",
           body: `Bonjour Lucas,
 
-Je suis Nicolas Masselot, M1 ESCP, en recherche d'un stage de 6 mois en sales tech (juin 2026). Votre rôle de Sales Specialist AI chez Microsoft France m'a retenu : vendre Copilot et Azure OpenAI à des grands comptes implique de naviguer entre décideurs métier et DSI, ce qui correspond exactement à ce que je veux apprendre.
+Je suis Nicolas Masselot, M1 à ESCP, en recherche d'un stage de six mois en sales tech à partir de juin 2026. Votre rôle de Sales Specialist AI chez Microsoft France m'a retenu : vendre Copilot et Azure OpenAI à des grands comptes implique de naviguer entre décideurs métier et DSI — c'est exactement le type de vente que je cherche à apprendre.
 
-Mon profil est atypique : certifié AMF, passé par Investance Partners sur des produits complexes, et actif sur les APIs LLM (certification Claude API, PipeAgent en production). Je suis capable d'expliquer un modèle de langage à un DAF autant qu'à un développeur.
+Mon profil est atypique pour un M1 : j'ai construit PipeAgent (CRM agentique en production avec Claude API) et animé des sessions de formation technique pour 40 utilisateurs chez Investance Partners. Je suis capable d'expliquer un modèle de langage à un non-technicien aussi bien qu'à un développeur.
 
 Auriez-vous 20 minutes dans les prochains jours ?
 
@@ -125,18 +125,18 @@ Auriez-vous 20 minutes dans les prochains jours ?
       research: {
         generatedAt: d(8),
         companyBrief:
-          "Snowflake est le leader du data warehousing cloud, en pleine bascule vers les workloads AI avec Snowpark et Cortex AI. Après un pic post-IPO, la croissance se stabilise autour de 30 % YoY, mais la stratégie produit est claire : devenir la couche de données unifiée pour les applications LLM d'entreprise. En EMEA, Snowflake accélère les recrutements commerciaux — le bureau parisien a doublé d'effectif en 2024. Les cycles de vente sont longs (6-12 mois), ce qui rend les profils capables de construire une relation sur la durée très précieux.",
+          "Snowflake est le leader du data warehousing cloud et amorce un virage vers les workloads AI avec Snowpark et Cortex AI. Après une croissance post-IPO soutenue, la progression se stabilise autour de 30 % par an sur une base ARR significative. La stratégie produit est claire : devenir la couche de données unifiée pour les applications LLM d'entreprise. En EMEA, le bureau parisien a renforcé ses équipes commerciales en 2024. Les cycles de vente, longs de six à douze mois, valorisent les profils capables de construire une relation dans la durée.",
         personProfile:
-          "Sofia Bauer, Senior AE chez Snowflake depuis 3 ans, couvre le segment entreprise (CAC40 + grandes mutuelles). Passée par Oracle puis Salesforce, experte du cycle de vente data complexe. Mentor active, elle a publié il y a 3 semaines un post LinkedIn sur l'onboarding des juniors en vente data — signal fort d'ouverture à des profils stagiaires ambitieux.",
+          "Sofia Bauer est Senior Account Executive chez Snowflake depuis trois ans, après des passages chez Oracle et Salesforce. Elle couvre le segment entreprise avec un portefeuille de grandes organisations. Mentor active, elle a publié récemment sur LinkedIn à propos de l'intégration des profils juniors dans une équipe de vente data — signal direct d'une sensibilité à l'accompagnement des candidats ambitieux.",
         pitchAngles: [
-          "Certifié AMF et passé par Investance Partners sur la formation de clients institutionnels à des produits complexes, je parle structuré et data — exactement les interlocuteurs de Sofia en banque et assurance.",
-          "Heirl est un projet de structuration patrimoniale que j'ai développé depuis zéro, et Carry Regime Compass un outil d'analyse de régimes de carry — preuve que je construis des choses concrètes, pas uniquement que j'étudie des cas.",
-          "Le cycle Snowflake est long et relation-driven. Mon objectif est précisément d'apprendre ce type de vente complexe — pas de traiter des volumes, mais de comprendre comment une opportunité enterprise se construit sur 9 mois.",
+          "Chez Investance Partners, j'ai animé quatre formations sur site pour 40 utilisateurs d'une grande banque et obtenu 4,5/5 de satisfaction. Rendre accessible une technologie complexe à des interlocuteurs non-experts est une compétence centrale en vente data — et je l'ai déjà mise en pratique concrètement.",
+          "J'ai développé PipeAgent, un CRM agentique déployé en production, en utilisant les APIs Claude et des workflows agentiques. Ce projet montre que je comprends les cycles de vente de l'intérieur, pas seulement en théorie.",
+          "Mon objectif de stage est précisément d'apprendre la vente enterprise longue durée : comment une opportunité Snowflake se structure sur neuf à douze mois, de la découverte au closing. Je cherche à comprendre ce processus étape par étape, pas à traiter du volume.",
         ],
         questions: [
-          "Comment Snowflake positionne-t-il Cortex AI face aux offres Databricks et BigQuery AI sur les appels d'offres ?",
-          "Dans ton équipe, les stagiaires participent-ils aux discovery calls ou c'est plutôt du travail de préparation en amont ?",
-          "Quel est le profil type des juniors qui réussissent à Snowflake — plutôt école de commerce généraliste ou formation technique ?",
+          "Comment Snowflake positionne-t-il Cortex AI face aux offres Databricks et BigQuery dans les appels d'offres ?",
+          "Les stagiaires participent-ils aux discovery calls, ou leur rôle est-il plutôt de préparer les réunions en amont ?",
+          "Quel profil junior réussit le mieux chez Snowflake — plutôt école de commerce généraliste ou formation à dominante technique ?",
         ],
       },
     },
@@ -172,18 +172,18 @@ Auriez-vous 20 minutes dans les prochains jours ?
       research: {
         generatedAt: d(3),
         companyBrief:
-          "Mistral AI est le principal acteur européen des LLMs, valorisé 6 Mds$ après sa série B (juin 2024). La stratégie commerciale repose sur deux axes : l'API self-service pour les développeurs, et les deals entreprise via La Plateforme (déploiement on-premise ou VPC). En 2025, Mistral accélère son GTM avec des partenariats Microsoft Azure, AWS et Snowflake, et monte une équipe commerciale parisienne pour couvrir les grands comptes souverains européens (gouvernements, défense, finance). Les recrutements GTM sont rares et très sélectifs.",
+          "Mistral AI est le principal acteur européen des grands modèles de langage, valorisé 6 Mds$ après sa série B en juin 2024. La stratégie commerciale repose sur deux axes : l'API self-service pour les développeurs et les déploiements entreprise via La Plateforme, en on-premise ou VPC. En 2025, Mistral accélère son go-to-market avec des partenariats Microsoft Azure, AWS et Snowflake, et monte une équipe commerciale parisienne pour adresser les grands comptes souverains européens. Les recrutements GTM restent rares et très sélectifs.",
         personProfile:
-          "Elsa Tournon est Head of GTM chez Mistral AI depuis 8 mois, recrutée depuis Dataiku où elle dirigeait les opérations commerciales EMEA. Ancienne Sciences Po + HEC, très active dans l'écosystème French Tech. Elle a récemment parlé dans un podcast sur la structuration d'une équipe sales dans une startup AI en hypercroissance. Profil décideur qui cherche des stagiaires capables de monter un playbook, pas juste d'exécuter.",
+          "Elsa Tournon est Head of GTM chez Mistral AI depuis huit mois, recrutée depuis Dataiku où elle dirigeait les opérations commerciales EMEA. Ancienne Sciences Po et HEC, elle est très active dans l'écosystème French Tech et a récemment participé à un podcast sur la structuration d'une équipe sales dans une startup AI en hypercroissance. C'est un profil décideur qui cherche des stagiaires capables de contribuer à la construction d'un playbook, pas simplement d'exécuter des tâches définies.",
         pitchAngles: [
-          "Certifié Building with the Claude API et MCP, j'ai construit PipeAgent (CRM agentique en prod) — je suis un utilisateur actif des APIs LLM, ce qui m'aligne directement avec les cas d'usage que Mistral vend à ses clients entreprise.",
-          "Chez Investance Partners, j'ai travaillé sur la structuration de formations pour des clients institutionnels — appétence native pour la documentation et la construction de playbooks, exactement ce que demande un Head of GTM en phase de scaling.",
-          "Mistral est le seul acteur européen crédible face à OpenAI sur le souverain. C'est un angle de vente fort dans les grands comptes publics et financiers — terrain que je connais via mes certifications AMF et mon passage chez Investance.",
+          "J'utilise les APIs Claude et les MCPs au quotidien et j'ai construit PipeAgent, un CRM agentique déployé en production. Je suis un utilisateur réel des technologies que Mistral vend à ses clients entreprise — ce qui me permet de tenir les deux discours : celui du produit et celui du client.",
+          "Chez Investance Partners, j'ai produit un rapport de 25 pages sur les technologies de paiement émergentes et animé des sessions de formation pour 40 utilisateurs. J'ai une appétence naturelle pour la documentation et la structuration d'un discours — exactement ce que demande la construction d'un playbook GTM.",
+          "Le positionnement souverain de Mistral est son argument le plus différenciant auprès des institutions publiques et des grands groupes européens réticents à la dépendance cloud américaine. C'est un angle de vente que je comprends et que je serais capable de défendre concrètement.",
         ],
         questions: [
-          "Comment Mistral articule-t-il le positioning open-weight (Mistral 7B) vs API commerciale dans les discussions avec des grands comptes frileux sur la dépendance vendor ?",
-          "Est-ce que le stagiaire GTM travaillerait principalement sur des sujets outbound, ou aussi sur de la structuration interne (playbook, enablement) ?",
-          "Quelle est la taille cible des deals entreprise en France — est-ce qu'on parle de contrats 50k€ ou de deals >500k€ ?",
+          "Comment Mistral articule-t-il le positionnement open-weight face à l'API commerciale dans les discussions avec des grands comptes soucieux de leur indépendance technique ?",
+          "Le stagiaire GTM travaillerait-il principalement sur des sujets outbound, ou aussi sur la structuration interne — playbook, enablement, documentation ?",
+          "Quelle est la taille cible des deals entreprise en France — parle-t-on de contrats à 50 000 € ou de deals au-dessus de 500 000 € ?",
         ],
       },
     },

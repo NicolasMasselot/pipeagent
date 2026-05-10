@@ -19,7 +19,14 @@ Tu dois générer un brief de recherche pre-call pour le contact suivant.
 **Profil de Nicolas (l'utilisateur) :**
 ${formatUserProfileContext(profile)}
 
-Génère un JSON avec ce schéma exact. Sois factuel : si tu n'as pas d'info récente sur l'entreprise, dis ce que tu sais sans inventer de chiffres. Les pitchAngles et questions doivent être concrets et personnalisés aux expériences et projets de Nicolas.
+Génère un JSON avec ce schéma exact.
+
+Règles de style impératives :
+- Écris en phrases françaises complètes, jamais en style prise de notes (pas de fragments, pas de tirets pour remplacer un verbe).
+- Sois factuel et concis : si tu n'as pas d'info récente sur l'entreprise, dis ce que tu sais sans inventer de chiffres.
+- Pas de remplissage, pas de superlatifs, pas de formules creuses.
+- Les pitchAngles doivent être concrets, ancrés dans les expériences réelles de Nicolas (formation Investance Partners, projets PipeAgent/Scribe/Carry Regime Compass). Évite les angles génériques ou trop centrés sur la finance.
+- Les questions doivent être précises et montrer une vraie préparation, pas des questions basiques que n'importe qui poserait.
 
 {
   "companyBrief": "string (3-5 phrases sur l'entreprise et son contexte business actuel)",
