@@ -46,7 +46,7 @@ function ClaudeApiStatus() {
 
 export default function Topbar({ title }: TopbarProps) {
   return (
-    <header className="flex items-center justify-between h-14 px-6 border-b border-border bg-background shrink-0">
+    <header className="flex items-center justify-between h-14 px-6 border-b border-border shrink-0 bg-[oklch(0.08_0.005_285_/_0.80)] backdrop-blur-md">
 
       {/* Titre de la page */}
       <h1 className="text-sm font-semibold text-foreground tracking-tight">

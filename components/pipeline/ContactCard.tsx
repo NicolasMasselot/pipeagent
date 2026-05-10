@@ -31,9 +31,9 @@ export default function ContactCard({ contact, onClick }: ContactCardProps) {
       {...attributes}
       onClick={onClick}
       className={cn(
-        "bg-surface-elevated border border-border rounded-lg p-3",
+        "bg-surface-elevated border border-border rounded-lg p-3 pipe-card-shadow",
         "cursor-grab active:cursor-grabbing transition-colors",
-        "hover:border-pipe-accent/40",
+        "hover:border-pipe-accent/40 hover:bg-[oklch(0.19_0.010_278)]",
         isDragging && "opacity-50"
       )}
     >

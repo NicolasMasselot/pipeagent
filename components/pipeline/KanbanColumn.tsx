@@ -18,9 +18,9 @@ export default function KanbanColumn({ stage, contacts, onCardClick }: KanbanCol
     <div
       ref={setNodeRef}
       className={cn(
-        "flex flex-col w-[300px] shrink-0 h-full bg-surface rounded-lg overflow-hidden transition-colors",
+        "flex flex-col w-[300px] shrink-0 h-full bg-surface rounded-xl overflow-hidden transition-colors pipe-column-shadow",
         isOver
-          ? "border border-pipe-accent/60 ring-1 ring-pipe-accent/20 bg-surface-elevated"
+          ? "border border-pipe-accent/50 ring-1 ring-pipe-accent/15"
           : "border border-border-subtle"
       )}
     >

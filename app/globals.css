@@ -108,11 +108,11 @@
 /* ─── Thème dark PipeAgent — palette principale ─── */
 .dark {
   /* Tokens sémantiques PipeAgent */
-  --pipe-bg: #0A0A0B;
-  --pipe-surface: #111113;
-  --pipe-surface-elevated: #18181B;
-  --pipe-border: #232327;
-  --pipe-border-subtle: #1A1A1D;
+  --pipe-bg: #08080A;
+  --pipe-surface: #101013;
+  --pipe-surface-elevated: #17171B;
+  --pipe-border: #27272C;
+  --pipe-border-subtle: #1C1C21;
   --pipe-fg: #FAFAFA;
   --pipe-muted: #A1A1AA;
   --pipe-muted-fg: #71717A;
@@ -123,36 +123,36 @@
   --pipe-danger: #EF4444;
 
   /* Variables shadcn mappées à la palette PipeAgent */
-  --background: #0A0A0B;
+  --background: #08080A;
   --foreground: #FAFAFA;
-  --card: #111113;
+  --card: #101013;
   --card-foreground: #FAFAFA;
-  --popover: #18181B;
+  --popover: #17171B;
   --popover-foreground: #FAFAFA;
   --primary: #6366F1;
   --primary-foreground: #FAFAFA;
-  --secondary: #18181B;
+  --secondary: #17171B;
   --secondary-foreground: #A1A1AA;
-  --muted: #111113;
+  --muted: #101013;
   --muted-foreground: #71717A;
-  --accent: #18181B;
+  --accent: #17171B;
   --accent-foreground: #FAFAFA;
   --destructive: #EF4444;
-  --border: #232327;
-  --input: #18181B;
+  --border: #27272C;
+  --input: #17171B;
   --ring: #6366F1;
   --chart-1: #6366F1;
   --chart-2: #10B981;
   --chart-3: #F59E0B;
   --chart-4: #818CF8;
   --chart-5: #34D399;
-  --sidebar: #111113;
+  --sidebar: #101013;
   --sidebar-foreground: #FAFAFA;
   --sidebar-primary: #6366F1;
   --sidebar-primary-foreground: #FAFAFA;
-  --sidebar-accent: #18181B;
+  --sidebar-accent: #17171B;
   --sidebar-accent-foreground: #FAFAFA;
-  --sidebar-border: #232327;
+  --sidebar-border: #27272C;
   --sidebar-ring: #6366F1;
 }
 
@@ -162,9 +162,29 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    color: var(--foreground);
+    /* Radial glow from top-right, layered over the dark base */
+    background:
+      radial-gradient(ellipse 85% 55% at 68% -12%, oklch(0.24 0.10 272 / 0.28) 0%, transparent 58%),
+      var(--background);
+    min-height: 100vh;
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* ─── Utilities PipeAgent ─── */
+@layer utilities {
+  /* Profondeur pour les cartes et colonnes */
+  .pipe-card-shadow {
+    box-shadow: 0 1px 2px oklch(0 0 0 / 0.55), 0 2px 10px oklch(0 0 0 / 0.22);
+  }
+  .pipe-column-shadow {
+    box-shadow: 0 2px 12px oklch(0 0 0 / 0.30);
+  }
+  /* Fond dégradé de la sidebar */
+  .pipe-sidebar-bg {
+    background: linear-gradient(175deg, oklch(0.145 0.013 278) 0%, oklch(0.105 0.005 285) 100%);
   }
 }
