@@ -62,7 +62,9 @@ export default function EmailPanel({ contact, onUpdate }: EmailPanelProps) {
       const emails = [...(contact.emails ?? []), newEmail];
       onUpdate({ ...contact, emails });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur lors de la génération");
+      const msg = err instanceof Error ? err.message : "Erreur lors de la génération";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

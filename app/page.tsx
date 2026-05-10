@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import type { Contact } from "@/lib/types/contact";
 import { loadContacts, saveContacts, resetContacts } from "@/lib/storage/contacts-store";
 import { scoreContact, applyScoreResult } from "@/lib/ai/scoring";
 import { USER_PROFILE } from "@/lib/data/profile";
 import Topbar from "@/components/layout/Topbar";
+import WelcomeDialog from "@/components/layout/WelcomeDialog";
 import PipelineBoard from "@/components/pipeline/PipelineBoard";
 import ContactDetailSheet from "@/components/contact/ContactDetailSheet";
 import { Button } from "@/components/ui/button";
@@ -40,19 +42,25 @@ export default function HomePage() {
     if (!unscoredContacts.length) return;
 
     setBulkProgress({ done: 0, total: unscoredContacts.length });
+    let errorCount = 0;
 
     for (let i = 0; i < unscoredContacts.length; i++) {
       const contact = unscoredContacts[i];
       try {
         const result = await scoreContact(contact, USER_PROFILE);
         handleContactUpdate(applyScoreResult(contact, result));
-      } catch {
+      } catch (err) {
+        errorCount++;
         /* Continue on failure so a single bad contact doesn't abort the batch */
       }
       setBulkProgress({ done: i + 1, total: unscoredContacts.length });
     }
 
     setBulkProgress(null);
+
+    if (errorCount > 0) {
+      toast.error(`${errorCount} contact${errorCount > 1 ? "s" : ""} n'ont pas pu être scorés`);
+    }
   }
 
   const allScored = contacts.length > 0 && contacts.every((c) => !!c.score);
@@ -60,6 +68,7 @@ export default function HomePage() {
 
   return (
     <>
+      <WelcomeDialog />
       <Topbar title="Pipeline" />
 
       <div className="flex items-center justify-end gap-3 px-6 pt-3">

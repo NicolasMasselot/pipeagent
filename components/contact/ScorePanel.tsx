@@ -5,6 +5,7 @@ import type { Contact } from "@/lib/types/contact";
 import { USER_PROFILE } from "@/lib/data/profile";
 import { scoreContact, applyScoreResult } from "@/lib/ai/scoring";
 import { getScoreThreshold } from "@/lib/utils/format";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 interface ScorePanelProps {
@@ -41,7 +42,9 @@ export default function ScorePanel({ contact, onUpdate }: ScorePanelProps) {
       const result = await scoreContact(contact, USER_PROFILE);
       onUpdate(applyScoreResult(contact, result));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur lors du scoring");
+      const msg = err instanceof Error ? err.message : "Erreur lors du scoring";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
