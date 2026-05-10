@@ -37,8 +37,8 @@ export default function ContactCard({ contact, onClick, isPriority }: ContactCar
       {...(isPriority ? { "data-tour": "card-priority" } : {})}
       className={cn(
         "border border-border rounded-lg p-3 pipe-card-shadow",
-        "cursor-grab active:cursor-grabbing transition-all duration-150",
-        "hover:border-pipe-accent/50 hover:scale-[1.01]",
+        "cursor-grab active:cursor-grabbing",
+        !isDragging && "transition-[border-color,transform] duration-150 hover:border-pipe-accent/50 hover:scale-[1.01]",
         isDragging && "opacity-50"
       )}
     >

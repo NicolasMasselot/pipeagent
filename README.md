@@ -36,8 +36,10 @@ Ouvre [http://localhost:3000](http://localhost:3000).
 
 ## Demo data
 
-5 contacts réels sont pré-chargés au premier lancement (stockés en localStorage). Un bouton "Reset pipeline" permet de les restaurer à tout moment.
+Tous les contacts sont fictifs et générés pour la démo. Aucune correspondance avec des personnes réelles. Un bouton "Reset pipeline" permet de restaurer le seed à tout moment.
 
 ## Screenshot
 
-> À ajouter — capture d'écran ou GIF de démonstration
+Place your screenshot at `public/screenshot.png` (recommended: **1280×800px, PNG**).
+
+It will automatically appear as the OG image in social link previews (iMessage, LinkedIn, Slack) once added.

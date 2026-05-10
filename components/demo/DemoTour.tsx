@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { Contact } from "@/lib/types/contact";
+import type { Contact, SheetTab } from "@/lib/types/contact";
+import { getPriorityContact } from "@/lib/utils/priority";
 
 interface DemoTourProps {
   open: boolean;
@@ -12,7 +13,7 @@ interface DemoTourProps {
   contacts: Contact[];
   onOpenSheet: (contact: Contact) => void;
   onCloseSheet: () => void;
-  onSelectTab: (tab: string) => void;
+  onSelectTab: (tab: SheetTab) => void;
 }
 
 type Action = "openSheet" | "switchResearch" | "switchEmails" | "closeSheet";
@@ -71,24 +72,33 @@ const STEPS: Step[] = [
 ];
 
 const RING_PAD = 6;
+const ACTION_SETTLE_MS = 450;
+const NO_ACTION_SETTLE_MS = 80;
 
-function getPriorityContact(contacts: Contact[]): Contact | null {
-  if (!contacts.length) return null;
-  return contacts.reduce((best, c) =>
-    (c.score ?? 0) > (best.score ?? 0) ? c : best,
-    contacts[0]
-  );
-}
-
-/* Retry-based rect finder: waits for element to appear in DOM after actions */
-function findElementRect(selector: string): Promise<DOMRect | null> {
+/* Polls until the element exists AND has a non-zero rect. Radix Tabs keeps
+   inactive panels in the DOM with `hidden`, so querying alone can resolve
+   with a (0,0,0,0) rect during a tab transition. The cancel ref lets the
+   step-effect cleanup abort the recursion immediately. */
+function findElementRect(
+  selector: string,
+  cancelRef: { cancelled: boolean }
+): Promise<DOMRect | null> {
   return new Promise((resolve) => {
     let attempts = 0;
     const check = () => {
-      const el = document.querySelector(selector);
-      if (el) {
-        resolve(el.getBoundingClientRect());
-      } else if (attempts++ < 15) {
+      if (cancelRef.cancelled) {
+        resolve(null);
+        return;
+      }
+      const el = document.querySelector(selector) as HTMLElement | null;
+      if (el && el.offsetParent !== null) {
+        const rect = el.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          resolve(rect);
+          return;
+        }
+      }
+      if (attempts++ < 30) {
         setTimeout(check, 80);
       } else {
         resolve(null);
@@ -111,20 +121,20 @@ export default function DemoTour({
   const [mounted, setMounted] = useState(false);
   const autoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  /* Portal needs client-side mount */
   useEffect(() => { setMounted(true); }, []);
 
-  /* Reset step and clear timers when tour opens/closes */
   useEffect(() => {
     if (open) {
       setStep(0);
     } else {
       setRect(null);
-      if (autoRef.current) clearTimeout(autoRef.current);
+      if (autoRef.current) {
+        clearTimeout(autoRef.current);
+        autoRef.current = null;
+      }
     }
   }, [open]);
 
-  /* Enter a step: run action, find rect, set auto-advance */
   useEffect(() => {
     if (!open) return;
 
@@ -136,8 +146,6 @@ export default function DemoTour({
       autoRef.current = null;
     }
 
-    /* Run side-effect action */
-    const actionDelay = current.action ? 450 : 80;
     if (current.action === "openSheet") {
       const priority = getPriorityContact(contacts);
       if (priority) onOpenSheet(priority);
@@ -149,21 +157,24 @@ export default function DemoTour({
       onCloseSheet();
     }
 
-    /* Find target element after action settles */
-    let cancelled = false;
-    setTimeout(async () => {
-      if (cancelled || !current.targetSelector) return;
-      const found = await findElementRect(current.targetSelector);
-      if (!cancelled) setRect(found);
+    const cancelRef = { cancelled: false };
+    const settleTimer = setTimeout(async () => {
+      if (cancelRef.cancelled || !current.targetSelector) return;
+      const found = await findElementRect(current.targetSelector, cancelRef);
+      if (cancelRef.cancelled) return;
+      setRect(found);
 
-      if (!cancelled && current.autoAdvanceMs) {
+      if (current.autoAdvanceMs) {
         autoRef.current = setTimeout(() => {
           setStep((s) => Math.min(s + 1, STEPS.length - 1));
         }, current.autoAdvanceMs);
       }
-    }, actionDelay);
+    }, current.action ? ACTION_SETTLE_MS : NO_ACTION_SETTLE_MS);
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelRef.cancelled = true;
+      clearTimeout(settleTimer);
+    };
   }, [step, open, contacts, onOpenSheet, onCloseSheet, onSelectTab]);
 
   function handleNext() {
@@ -185,12 +196,12 @@ export default function DemoTour({
 
   const current = STEPS[step];
 
-  /* Spotlight quadrant click-catchers (avoid covering the highlighted element) */
+  /* Quadrants around the spotlight — keeps the highlighted element clickable. */
   const catchers = current.hasOverlay && rect ? [
-    /* top */ { top: 0, left: 0, width: "100vw", height: rect.top - RING_PAD },
-    /* bottom */ { top: rect.bottom + RING_PAD, left: 0, width: "100vw", height: `calc(100vh - ${rect.bottom + RING_PAD}px)` },
-    /* left */ { top: rect.top - RING_PAD, left: 0, width: rect.left - RING_PAD, height: rect.height + RING_PAD * 2 },
-    /* right */ { top: rect.top - RING_PAD, left: rect.right + RING_PAD, width: `calc(100vw - ${rect.right + RING_PAD}px)`, height: rect.height + RING_PAD * 2 },
+    { top: 0, left: 0, width: "100vw", height: rect.top - RING_PAD },
+    { top: rect.bottom + RING_PAD, left: 0, width: "100vw", height: `calc(100vh - ${rect.bottom + RING_PAD}px)` },
+    { top: rect.top - RING_PAD, left: 0, width: rect.left - RING_PAD, height: rect.height + RING_PAD * 2 },
+    { top: rect.top - RING_PAD, left: rect.right + RING_PAD, width: `calc(100vw - ${rect.right + RING_PAD}px)`, height: rect.height + RING_PAD * 2 },
   ] : current.hasOverlay ? [
     { top: 0, left: 0, width: "100vw", height: "100vh" },
   ] : [];

@@ -2,6 +2,8 @@
 
 export type Stage = "identified" | "contacted" | "in_conversation" | "internship";
 
+export type SheetTab = "research" | "emails" | "notes";
+
 /* Définition des étapes de la pipeline avec leur couleur d'affichage */
 export const STAGES: { id: Stage; label: string; color: string }[] = [
   { id: "identified",      label: "Identifié",       color: "#71717A" },
