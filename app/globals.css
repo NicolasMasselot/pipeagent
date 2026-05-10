@@ -156,12 +156,24 @@
   --sidebar-ring: #6366F1;
 }
 
-/* ─── Animation glow ─── */
+/* ─── @property : permet d'interpoler les positions du gradient ─── */
+@property --gx {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 85%;
+}
+@property --gy {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: -5%;
+}
+
+/* ─── Animation : le centre du glow glisse doucement ─── */
 @keyframes glow-drift {
-  0%   { transform: translate(0,    0)    scale(1.00); }
-  33%  { transform: translate(-6%,  8%)   scale(1.06); }
-  66%  { transform: translate(-10%, 2%)   scale(1.03); }
-  100% { transform: translate(-4%,  10%)  scale(1.08); }
+  0%   { --gx: 85%; --gy: -5%;  }
+  35%  { --gx: 65%; --gy: 25%;  }
+  70%  { --gx: 80%; --gy: 50%;  }
+  100% { --gx: 85%; --gy: -5%;  }
 }
 
 /* ─── Base styles ─── */
@@ -169,31 +181,17 @@
   * {
     @apply border-border outline-ring/50;
   }
-  /* html fournit la couleur de base (opaque) */
   html {
     @apply font-sans;
-    background: var(--background);
   }
-  /* body transparent : le glow passe à travers */
   body {
     color: var(--foreground);
-    background: transparent;
-    min-height: 100vh;
-    position: relative;
-    isolation: isolate;
-  }
-  /* Glow animé sur pseudo-élément fixé au viewport */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
     background:
-      radial-gradient(ellipse 65% 70% at 85% -5%, oklch(0.38 0.22 268) 0%, transparent 55%),
-      radial-gradient(ellipse 45% 45% at 10% 100%, oklch(0.22 0.14 280) 0%, transparent 50%);
-    animation: glow-drift 14s ease-in-out infinite alternate;
-    will-change: transform;
+      radial-gradient(ellipse 65% 70% at var(--gx) var(--gy), oklch(0.38 0.22 268) 0%, transparent 55%),
+      radial-gradient(ellipse 45% 45% at 10% 100%, oklch(0.22 0.14 280) 0%, transparent 50%),
+      var(--background);
+    min-height: 100vh;
+    animation: glow-drift 22s ease-in-out infinite;
   }
 }
 
