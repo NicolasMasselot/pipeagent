@@ -107,12 +107,12 @@
 
 /* ─── Thème dark PipeAgent — palette principale ─── */
 .dark {
-  /* Tokens sémantiques PipeAgent */
-  --pipe-bg: #08080A;
-  --pipe-surface: #101013;
-  --pipe-surface-elevated: #17171B;
-  --pipe-border: #27272C;
-  --pipe-border-subtle: #1C1C21;
+  /* Tokens sémantiques PipeAgent — surfaces légèrement teintées indigo */
+  --pipe-bg: oklch(0.08 0.008 272);
+  --pipe-surface: oklch(0.12 0.018 272);
+  --pipe-surface-elevated: oklch(0.16 0.022 270);
+  --pipe-border: oklch(0.26 0.022 272);
+  --pipe-border-subtle: oklch(0.19 0.016 272);
   --pipe-fg: #FAFAFA;
   --pipe-muted: #A1A1AA;
   --pipe-muted-fg: #71717A;
@@ -123,36 +123,36 @@
   --pipe-danger: #EF4444;
 
   /* Variables shadcn mappées à la palette PipeAgent */
-  --background: #08080A;
+  --background: oklch(0.08 0.008 272);
   --foreground: #FAFAFA;
-  --card: #101013;
+  --card: oklch(0.12 0.018 272);
   --card-foreground: #FAFAFA;
-  --popover: #17171B;
+  --popover: oklch(0.16 0.022 270);
   --popover-foreground: #FAFAFA;
   --primary: #6366F1;
   --primary-foreground: #FAFAFA;
-  --secondary: #17171B;
+  --secondary: oklch(0.16 0.022 270);
   --secondary-foreground: #A1A1AA;
-  --muted: #101013;
+  --muted: oklch(0.12 0.018 272);
   --muted-foreground: #71717A;
-  --accent: #17171B;
+  --accent: oklch(0.16 0.022 270);
   --accent-foreground: #FAFAFA;
   --destructive: #EF4444;
-  --border: #27272C;
-  --input: #17171B;
+  --border: oklch(0.26 0.022 272);
+  --input: oklch(0.16 0.022 270);
   --ring: #6366F1;
   --chart-1: #6366F1;
   --chart-2: #10B981;
   --chart-3: #F59E0B;
   --chart-4: #818CF8;
   --chart-5: #34D399;
-  --sidebar: #101013;
+  --sidebar: oklch(0.11 0.020 272);
   --sidebar-foreground: #FAFAFA;
   --sidebar-primary: #6366F1;
   --sidebar-primary-foreground: #FAFAFA;
-  --sidebar-accent: #17171B;
+  --sidebar-accent: oklch(0.16 0.022 270);
   --sidebar-accent-foreground: #FAFAFA;
-  --sidebar-border: #27272C;
+  --sidebar-border: oklch(0.22 0.018 272);
   --sidebar-ring: #6366F1;
 }
 
@@ -163,9 +163,10 @@
   }
   body {
     color: var(--foreground);
-    /* Radial glow from top-right, layered over the dark base */
+    /* Glow indigo top-right + accent subtil bas-gauche */
     background:
-      radial-gradient(ellipse 85% 55% at 68% -12%, oklch(0.24 0.10 272 / 0.28) 0%, transparent 58%),
+      radial-gradient(ellipse 65% 70% at 85% -5%, oklch(0.38 0.22 268) 0%, transparent 55%),
+      radial-gradient(ellipse 45% 45% at 10% 100%, oklch(0.22 0.14 280) 0%, transparent 50%),
       var(--background);
     min-height: 100vh;
   }
@@ -176,15 +177,20 @@
 
 /* ─── Utilities PipeAgent ─── */
 @layer utilities {
-  /* Profondeur pour les cartes et colonnes */
+  /* Cartes : bordure-lumière en haut + ombre noire en bas */
   .pipe-card-shadow {
-    box-shadow: 0 1px 2px oklch(0 0 0 / 0.55), 0 2px 10px oklch(0 0 0 / 0.22);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.06),
+      0 4px 16px oklch(0 0 0 / 0.50);
   }
+  /* Colonnes : ombre portée + contour lumineux */
   .pipe-column-shadow {
-    box-shadow: 0 2px 12px oklch(0 0 0 / 0.30);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.05),
+      0 4px 24px oklch(0 0 0 / 0.45);
   }
-  /* Fond dégradé de la sidebar */
+  /* Sidebar : fond légèrement plus teinté que le body */
   .pipe-sidebar-bg {
-    background: linear-gradient(175deg, oklch(0.145 0.013 278) 0%, oklch(0.105 0.005 285) 100%);
+    background: oklch(0.11 0.020 272);
   }
 }

@@ -19,9 +19,11 @@ export default function ContactCard({ contact, onClick }: ContactCardProps) {
     id: contact.id,
   });
 
-  const style = transform
-    ? { transform: CSS.Translate.toString(transform) }
-    : undefined;
+  const cardBg = "linear-gradient(145deg, oklch(0.18 0.024 268) 0%, oklch(0.14 0.016 276) 100%)";
+  const style = {
+    background: cardBg,
+    ...(transform ? { transform: CSS.Translate.toString(transform) } : {}),
+  };
 
   return (
     <div
@@ -31,9 +33,9 @@ export default function ContactCard({ contact, onClick }: ContactCardProps) {
       {...attributes}
       onClick={onClick}
       className={cn(
-        "bg-surface-elevated border border-border rounded-lg p-3 pipe-card-shadow",
-        "cursor-grab active:cursor-grabbing transition-colors",
-        "hover:border-pipe-accent/40 hover:bg-[oklch(0.19_0.010_278)]",
+        "border border-border rounded-lg p-3 pipe-card-shadow",
+        "cursor-grab active:cursor-grabbing transition-all duration-150",
+        "hover:border-pipe-accent/50 hover:scale-[1.01]",
         isDragging && "opacity-50"
       )}
     >
