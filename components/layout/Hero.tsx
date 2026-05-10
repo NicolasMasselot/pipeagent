@@ -24,8 +24,9 @@ export default function Hero({ onStartTour }: HeroProps) {
       {/* Sous-titre */}
       <p className="mt-3 text-base text-muted-foreground leading-relaxed">
         PipeAgent transforme une pipeline brute en workflow agentique. Pre-call research,
-        emails contextuels et lead scoring, propulsés par Claude. Construit par Nicolas
-        Masselot, M1 ESCP, en candidature stage juin 2026.
+        emails contextuels et lead scoring, propulsés par Claude. Il est développé par Nicolas
+        Masselot, étudiant en M1 à ESCP Business School, en recherche d'un stage en sales tech
+        à partir de juin 2026.
       </p>
 
       {/* CTAs */}

@@ -28,7 +28,7 @@ export function getSeedContacts(): Contact[] {
       research: {
         generatedAt: d(27),
         companyBrief:
-          "Databricks est le leader du data lakehouse, valorisé 62 Mds$ après sa série J en 2024. Sa plateforme unifie data engineering, analytics et machine learning sur un même runtime (Delta Lake, MLflow). L'acquisition de Mosaic AI a accéléré le virage LLM : Databricks commercialise désormais DBRX et des solutions de fine-tuning souverain auprès des grands comptes européens. La croissance ARR dépasse 50 % en EMEA, portée notamment par les secteurs public et retail tech.",
+          "Databricks est le leader du data lakehouse, valorisé 62 Mds$ après sa série J en décembre 2024. Sa plateforme unifie data engineering, analytics et machine learning sur un même runtime (Delta Lake, MLflow). L'acquisition de MosaicML en 2023, rebaptisé Mosaic AI, a accéléré le virage LLM : Databricks commercialise désormais DBRX et des solutions de fine-tuning souverain auprès des grands comptes européens. La croissance reste soutenue en EMEA, portée notamment par les secteurs public et retail tech.",
         personProfile:
           "Théo Marchetti est Account Executive chez Databricks Paris depuis 18 mois, après deux ans chez Talend. Il couvre un portefeuille mid-market à entreprise et est actif sur LinkedIn, où il publie régulièrement sur les usages data en entreprise. Son profil de chasseur et son activité éditoriale indiquent une ouverture aux profils juniors capables de s'intégrer rapidement dans un cycle de vente technique.",
         pitchAngles: [
