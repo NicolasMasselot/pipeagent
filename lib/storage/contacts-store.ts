@@ -1,8 +1,8 @@
 import type { Contact } from "@/lib/types/contact";
 import { getSeedContacts } from "@/lib/data/seed-contacts";
 
-/* Clé de stockage localStorage — versionnée pour faciliter les migrations futures */
-const KEY = "pipeagent.contacts.v1";
+/* Clé de stockage localStorage — v2 bumpe le seed démo fictif */
+const KEY = "pipeagent.contacts.v2";
 
 /*
  * Charge les contacts depuis localStorage.
